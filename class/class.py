@@ -20,23 +20,23 @@ class student():
         #参数：date（日期）
         pass
         
-    def creat_order(self,date,order_list):
+    def creat_order(self,order_list):
         #定义创建订单的方法
-        #参数：date(日期），order_list（含订单的列表）
-        #返回一个字典，key为日期，value为订单列表
+        #参数：order_list（含订单的列表）
+        #返回一个字典，key为学生类，value为订单列表
         order_dict=dict()
-        order_dict[date]=order_list
+        order_dict[self]=order_list
         return(order_dict)
 
-    def change_order(self,date,delete_item,add_item,old_order_list):
+    def change_order(self,delete_item,add_item,old_order_list):
         #定义更改订单的方法
-        #参数：date（日期），delete_item（删除项）,add_item（新增项）,old_order_list（原订单列表）
+        #参数：delete_item（删除项）,add_item（新增项）,old_order_list（原订单列表）
         #返回一个字典，key为日期，value为新订单列表
         new_order_list=old_order_list.copy()
         new_order_list.remove(delete_item)
         new_order_list.append(add_item)
         new_order_dict=dict()
-        new_order_dict[date]=new_order_dict
+        new_order_dict[self]=new_order_dict
         return(new_order_dict)
 
     def delete_order(self,date):
