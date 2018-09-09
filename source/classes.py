@@ -80,23 +80,25 @@ class stuff():
         #返回一个字典，key为date，value菜单列表，保存新的数据结构
 
 #更改至此
-    def change_menu(self,date,old_list,delete_item,add_item):
-        new_list=old_list.copy()
-        new_list.remove(delete_item)
-        new_list.append(add_item)
-        new_menu_dict=dict()
-        new_menu_dict[date]=new_list
-        return(new_menu_dict)
+    def change_menu(self,date,window,delete_item,add_item):
+        old_menu_dict=file_operate.delete_menu(date,window)     #删除原菜单
+        old_menu_list=old_menu_dict[date]
+        new_menu_list=old_menu_list.copy()
+        new_menu_list.remove(delete_item)
+        new_menu_list.append(add_item)      #增减操作
+        new_menu_dict=file_operate.creat_menu(new_menu_list,date,window)
+        return(new_menu_dict)       #返回新的菜单字典
         #更改菜单
-        #参数：date（日期），old_list（存放旧菜单的列表），delete_item（要删除的菜品），add_item（要新增的菜品）
-        #返回一个字典，key为日期，value为新菜单列表
+        #参数：date（日期），window（窗口号），old_list（存放旧菜单的列表），delete_item（要删除的菜品），add_item（要新增的菜品）
+        #保存并返回一个字典，key为日期，value为新菜单列表
 
-    def get_order_now(self,date,window_number):
+    def get_order_now(self,date,window):
         #查看当前各窗口的预订情况
-        #参数：date（日期），window_number（窗口号）
+        #参数：date（日期），window（窗口号）
         #返回列表，元素均为字典，key为菜名，value是数量
         #需调用B模块
-        pass
+        order_now=file_operate.get_order_now(date,window)
+        return(order_now)       #返回订单状态
 
 #定义管理员类
 class admin():
@@ -115,29 +117,35 @@ class admin():
 
     def add_stuaccount(self,user_name,key,name):
         new_stuaccount=student(user_name,key,name)
-        return(new_stuaccount)
+        info=file_operate.creat_newuser(new_stuaccount)
+        return(info)        #返回对象
         #创建学生账户
         #参数：user_name用户名，key密码，name姓名
-        #返回一个student类
+        #保存并返回一个student类
 
-    def delete_stuaccount(self,user_name):
+    def delete_stuaccount(self,user_name,identity):
         #删除学生账户
-        #参数：user_name用户名
+        #参数：user_name用户名,identity身份
         #需调用B模块
-        pass
+        info=file_operate.delete_user(user_name,identity)       #删除并接受信息
+        return(info)        #将信息返回
 
     def add_stuffaccount(self,user_name,key,name):
         new_stuffaccount=stuff(user_name,key,name)
-        return(new_stuffaccount)
+        info=file_operate.creat_newuser(new_stuffaccount)
+        return(info)        #返回信息
         #创建员工账户
         #参数：user_name用户名，key密码，name姓名
-        #返回一个stuff类
+        #保存并返回一个stuff类
 
     def delete_stuffaccount(self,user_name):
         #删除员工账户
         #参数：user_name用户名
         #需调用B模块
-        pass
+        info=file_operate.delete_user(user_name,identity)
+        return(info)        #返回信息
+
+#END
 
                         
     

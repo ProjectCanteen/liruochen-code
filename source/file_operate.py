@@ -114,25 +114,49 @@ def delete_stumenu(date,user_name,window):
         pickle.dump(order_now_dict,f)       #更新订单状态
     return(deleted_menu)        #将旧订单返回
 
-#函数delete_menu,参数：日期，窗口号，删除该日该窗口的菜单
+#函数delete_menu,参数：日期，窗口号，删除并返回该日该窗口的菜单
 
 def delete_menu(date,window):
     try:
         file='../data/menu_info/'+str(window)+'/'+str(date)+'_menu.pickle'
+        deleted_file=pickle.load(file)
         os.remove(file)
         file_1='../data/order_now_info/'+str(window)+'/'+str(date)+'_ordernow.pickle'
         os.remove(file_1)
+        return(deleted_file)        #返回删除的菜单
     except:
         return('菜单未创建！')        #若出错，则将错误信息返回
+
+#函数get_order_now
+#参数：date（日期），window（窗口号）
+def get_order_now(date,window):
+    try:
+        with open('../data/order_info/'+str(window)+'/'+str(date)+'_order.pickle','rb') as f:
+            order_now=pickle.load(f)
+    except IOError as err:
+        return(str(err))        #若出错则将错误信息返回
+    return(order_now)       #返回当前订单状态
 
 #函数creat_newuser,参数：类，向专用文件夹中添加文件
 
 def creat_newuser(class_):
     def creat_newfile(class_,name,identity):
-        with open('../data/user_info/'+str(identity)+'/'+str(name)+'/.pickle','wb') as f:
-            pickle.dump(class_,f)
-
+        try:
+            with open('../data/user_info/'+str(identity)+'/'+str(name)+'/.pickle','wb') as f:
+                pickle.dump(class_,f)
+            return(class_)        #若保存成功则返回对象
+        except IOError as err:
+            return(str(err))        #若出错则将错误信息返回
     creat_newfile(class_,class_.user_name,class_.identity)
+
+#函数delete_user,参数：user_name（用户名），identity（身份）
+def delete_user(user_name,identity):
+    file='../data/user_info/'+str(identity)+'/'+str(user_name)+'/.pickle'
+    try:
+        os.remove(file)
+        return(True)        #删除成功返回True
+    except Exception as e:
+        return(str(e))      #出错将错误信息返回
 
 #函数creat_combine,参数：一个数组，一个key，产生菜品的组合以字典形式保存在本地
 
