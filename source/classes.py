@@ -79,7 +79,6 @@ class stuff():
         #参数：date（日期），menu_list（含菜单的列表）,window(窗口号）
         #返回一个字典，key为date，value菜单列表，保存新的数据结构
 
-#更改至此
     def change_menu(self,date,window,delete_item,add_item):
         old_menu_dict=file_operate.delete_menu(date,window)     #删除原菜单
         old_menu_list=old_menu_dict[date]
